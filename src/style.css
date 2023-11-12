@@ -83,8 +83,8 @@ body {
 }
 
 #map {
-  max-width: 640px;
-  height: 480px;
+  max-width: 1240px;
+  height: 980px;
   margin: 40px auto;
   background: #ccc;
   border: 2px solid rgba(0, 0, 0, 0.12);
