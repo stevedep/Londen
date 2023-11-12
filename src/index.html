@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
+  <title>CodePen - Custom markers - Google Maps</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:400,700'><link rel="stylesheet" href="./style.css">
+
 </head>
-
 <body>
-  <main>
-    <h1>Vanilla JavaScript App</h1>
-  </main>
-</body>
+<!-- partial:index.partial.html -->
+<ul id="hotel-list">
+	<li id="123" class="hotel" data-lat="57.0460742" data-lng="9.9345682" data-title="Hotel Aalborg" data-description="Skønt hotel." data-price="guyy">Hotel Addalborg<span class="price">gt<span class="currency">DKK</span></span><span class="tag">Special price</span></li>
+	<li id="246" class="hotel" data-lat="57.0512775" data-lng="9.8845034" data-title="Danhostel Aalborg" data-description="Dejligt hotel." data-price="700">Danhostel Aalborg<span class="price">hyyf<span class="currency">DKK</span></span></li>
+</ul>
+<div id="map"></div>
+<!-- partial -->
+  <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD3Nv24G4A3vVYg7LwOT1wGI9ogZKVcORU'></script><script  src="./script.js"></script>
 
+</body>
 </html>
