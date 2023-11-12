@@ -83,11 +83,17 @@ body {
 }
 
 #map {
-  max-width: 1240px;
-  height: 980px;
+  max-width: 1040px;
+  height: 780px;
   margin: 40px auto;
   background: #ccc;
   border: 2px solid rgba(0, 0, 0, 0.12);
+}
+
+.marker-description {
+  background-color: #ffffff; /* or any color you prefer */
+  color: #000000; /* set the text color to ensure it's readable */
+  visibility: visible;
 }
 
 .hotel-marker {

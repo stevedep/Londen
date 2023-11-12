@@ -6,6 +6,7 @@ function customMarker(latlng, map, args) {
 	// Initialize all properties.
 	this.latlng = latlng;
 	this.args = args;
+// inside the customMarker function...
 
 	// Explicitly call setMap on this overlay.
 	this.setMap(map);
@@ -15,7 +16,14 @@ customMarker.prototype = new google.maps.OverlayView();
 
 customMarker.prototype.draw = function () {
 	var self = this,
-		div = this.div;
+	div = this.div;
+	var popupContent = '<div class="marker-title">' + this.price + '</div>' +
+	'<div class="marker-description">' + this.description + '</div>';
+
+	var infoWindow = new google.maps.InfoWindow({
+	content: popupContent
+	});
+
 
 	if (!div) {
 		div = this.div = document.createElement('div');
@@ -26,7 +34,7 @@ customMarker.prototype.draw = function () {
 			div.dataset.marker_id = self.args.marker_id;
 		}
 		if (typeof (self.args.price) !== 'undefined') {
-			div.innerHTML = self.args.price + '<span class="currency">DKK</span>';
+			div.innerHTML = self.args.price + '<span class="currency"></span>';
 		}
 
 		google.maps.event.addDomListener(div, 'click', function (event) {
@@ -50,9 +58,8 @@ function initialize() {
 	var mapCenter = new google.maps.LatLng(51.509865, -0.118092);
 	var mapOptions = {
 		center: mapCenter,
-		zoom: 12,
+		zoom: 13,
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
-
 		scrollwheel: false,
 		disableDefaultUI: true,
 		zoomControl: true,
@@ -252,6 +259,9 @@ function initialize() {
 
 	// Get list of hotels
 	var hotels = document.getElementById('hotel-list').children;
+	var infoWindow = new google.maps.InfoWindow({
+		content: popupContent
+	 });
 
 	// Go thru list of hotels
 	for (var a = 0, al = hotels.length; a < al; a++) {
@@ -259,70 +269,23 @@ function initialize() {
 		var hotelMarker = new customMarker(new google.maps.LatLng(hotels[a].getAttribute('data-lat'), hotels[a].getAttribute('data-lng')), map, {
 			class_name: 'hotel-marker',
 			marker_id: hotels[a].id,
-			price: hotels[a].getAttribute('data-price')
+			price: hotels[a].getAttribute('data-title'),
+			description: hotels[a].getAttribute('data-description') 
 		});
 
-		// Make markers clickable
-		hotelMarker.addListener('click', function (event) {
-			// Get list of markers
-			var markers = document.querySelectorAll('.hotel-marker');
+		var popupContent = '<div class="marker-title">' + hotels[a].getAttribute('data-title') + '</div>' +
+		'<div class="marker-description">' + hotels[a].getAttribute('data-description') + '</div>';
 
-			// Go thru list of markers
-			for (var m = 0, ml = markers.length; m < ml; m++) {
-				if (markers[m].getAttribute('data-marker_id') == this.div.getAttribute('data-marker_id')) {
-					markers[m].classList.add('js-active');
-				} else {
-					markers[m].classList.remove('js-active');
-				}
-			}
-
-			// Get list of hotels
-			var hotels = document.getElementById('hotel-list').children;
-
-			// Go thru list of hotels
-			for (var h = 0, hl = hotels.length; h < hl; h++) {
-				if (hotels[h].id === this.div.getAttribute('data-marker_id')) {
-					hotels[h].classList.add('js-active');
-				} else {
-					hotels[h].classList.remove('js-active');
-				}
-			}
-		});
-
-		// Make list items clickable
-		hotels[a].addEventListener('click', function (event) {
-			// Get list of markers
-			var markers = document.querySelectorAll('.hotel-marker');
-
-			// Go thru list of markers
-			for (var m = 0, ml = markers.length; m < ml; m++) {
-				if (markers[m].getAttribute('data-marker_id') == this.id) {
-					markers[m].classList.add('js-active');
-				} else {
-					markers[m].classList.remove('js-active');
-				}
-			}
-
-			// Get list of hotels
-			var hotels = document.getElementById('hotel-list').children;
-
-			// Go thru list of hotels
-			for (var h = 0, hl = hotels.length; h < hl; h++) {
-				if (hotels[h].id === this.id) {
-					hotels[h].classList.add('js-active');
-				} else {
-					hotels[h].classList.remove('js-active');
-				}
-			}
-		});
-	}
-
-	google.maps.event.addDomListener(map, 'idle', function () {
-		mapCenter = map.getCenter();
-	});
-	google.maps.event.addDomListener(window, 'resize', function () {
-		map.panTo(mapCenter);
-	});
+		(function(marker) {
+			var infoWindow = new google.maps.InfoWindow({
+			  content: popupContent
+			});
+		
+			hotelMarker.addListener('click', function() {
+			  infoWindow.open(map, marker);
+			});
+		  })(hotelMarker);
+	}	
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
