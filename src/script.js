@@ -47,7 +47,7 @@ customMarker.prototype.draw = function () {
 
 function initialize() {
 	var mapCanvas = document.getElementById('map');
-	var mapCenter = new google.maps.LatLng(57.04, 9.922);
+	var mapCenter = new google.maps.LatLng(51.509865, -0.118092);
 	var mapOptions = {
 		center: mapCenter,
 		zoom: 12,
